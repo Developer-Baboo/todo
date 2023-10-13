@@ -64,13 +64,10 @@ export default {
     },
     methods: {
         saveTodo() {
-            console.log(this.todo_input);
             if (this.todo_input.length > 0) {
                 axios.post('http://localhost:8000/api/todosStore', { 'name': this.todo_input })
                     .then(response => {
-                        console.log(response);
-                        // Assuming the response contains the newly created todo object
-                        this.todos.push(response.data); // Add the new todo to the todos array
+                        this.todos = response.data; // Update the todos list with the entire response data
                         this.todo_input = ''; // Clear the input field after successfully adding a new todo
                     })
                     .catch(error => {
