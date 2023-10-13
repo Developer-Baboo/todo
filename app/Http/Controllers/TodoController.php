@@ -12,7 +12,12 @@ class TodoController extends Controller
      */
     public function index()
     {
-        //
+        // dd("test");
+        // echo "Hello0";
+        // $todos = Todo::get();
+        // return response()->json(['todos' => $todos], 200);
+        $todos = Todo::all();
+        return response()->json($todos);
     }
 
     /**

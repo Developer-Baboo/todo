@@ -30,9 +30,23 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
+    data() {
+        return {
+            todos: [],
+        };
+    },
     mounted() {
-        console.log('Component mounted.')
-    }
-}
+        axios.get('http://localhost:8000/api/todos')
+            .then(response => {
+                this.todos = response.data;
+                console.log(this.todos);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    },
+};
 </script>
