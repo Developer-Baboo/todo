@@ -16,7 +16,7 @@ class TodoController extends Controller
         // echo "Hello0";
         // $todos = Todo::get();
         // return response()->json(['todos' => $todos], 200);
-        $todos = Todo::all();
+        $todos = Todo::orderBy('created_at', 'desc')->get();
         return response()->json($todos);
     }
 
@@ -69,8 +69,14 @@ class TodoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Todo $todo)
+    public function destroy($id)
     {
-        //
+        $todo = Todo::find($id);
+        if ($todo) {
+            $todo->delete();
+            return response()->json('Todo deleted successfully');
+        } else {
+            return response()->json('Todo not found', 404);
+        }
     }
 }

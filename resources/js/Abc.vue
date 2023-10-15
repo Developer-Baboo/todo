@@ -27,9 +27,12 @@
                             </thead>
                            <tbody>
                                 <tr v-for="(todo, index) in todos" :key="todo.id">
-                                    <td>{{ index + 1 }}</td>
+                                    <td>{{ index}}</td>
                                     <td>{{ todo.name }}</td>
-                                    <td>Delete</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-danger" @click="deleteTodo(index)">Delete</button>
+                                        <button type="button" class="btn btn-sm btn-info" @click="editTodo(index)">Edit</button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -47,7 +50,7 @@ export default {
     data() {
         return {
             todos: [],
-            api: 'http://localhost:8000/api/todos',
+            api: 'http://localhost:8000/api', // Remove '/todos' from the base URL
             todo_input: ''
         };
     },
@@ -55,7 +58,7 @@ export default {
         //get api data
         axios.get('http://localhost:8000/api/todos')
             .then(response => {
-                this.todos.push(response.data);
+                this.todos = [...response.data]; // Spread the response data to add individual todos
                 this.todo_input = '';
             })
             .catch(error => {
@@ -74,7 +77,24 @@ export default {
                         console.error(error);
                     });
             }
-        }
+        },
+       deleteTodo(index) {
+            if (this.todos[index].id) {
+                axios.delete(this.api + '/todos/' + this.todos[index].id)
+                    .then(res => {
+                        this.todos.splice(index, 1);
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
+       },
+
+       editTodo(index) {
+
+       }
+
+
     }
 
 };
