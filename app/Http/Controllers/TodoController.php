@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Todo;
 use Illuminate\Http\Request;
+use Log;
 
 class TodoController extends Controller
 {
@@ -61,9 +62,25 @@ class TodoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Todo $todo)
+    public function update(Request $request)
     {
-        //
+        echo "Hello";
+
+        try {
+            // Find the todo item by id
+            $todo = Todo::find($request->id);
+
+            // Update the todo item with new data
+            $todo->name = $request->name;
+            $todo->save();
+
+            // Return the updated todo item
+            return response()->json($todo);
+        } catch (\Exception $e) {
+            // Log the exception message for debugging
+            \Log::error($e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
     }
 
     /**
