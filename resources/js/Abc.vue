@@ -123,16 +123,15 @@ export default {
          // This method is triggered when the user clicks the "Update" button to save changes to a todo.
         updateTodo() {
             // Check if the input field is not empty and edit_todo_id is set (indicating an existing todo is being edited)
-            alert("Inside function");
+            // alert("Inside function");
             if (this.todo_input.length > 0 && this.edit_todo_id) {
 
-                alert("Inside If");
+                // alert("Inside If");
                 // Prepare an object with id and name properties for the updated todo.
                 const updatedTodo = {
                     id: this.edit_todo_id,
                     name: this.todo_input
                 };
-
                 axios.post('http://localhost:8000/api/todosUpdate', updatedTodo)
                     .then(response => {
                         // Assuming the response.data contains the updated todo item

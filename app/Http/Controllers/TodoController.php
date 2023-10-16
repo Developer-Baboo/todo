@@ -64,7 +64,6 @@ class TodoController extends Controller
      */
     public function update(Request $request)
     {
-        echo "Hello";
 
         try {
             // Find the todo item by id
